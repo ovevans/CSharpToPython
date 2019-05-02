@@ -85,6 +85,15 @@ namespace CSharpToPython.Tests {
         public void IsExpressionWorks() {
             Assert.Equal(true, Program.ConvertAndRunExpression(engine, "1 is int"));
         }
+        [Fact(Skip = "Not implemented yet")]
+        public void PatternMatchExpressionWorks() {
+            Assert.Equal(1, Program.ConvertAndRunExpression(engine, "1 is int i ? i : 0"));
+        }
+
+        [Fact]
+        public void TypeofExpressionWorks() {
+            Assert.True((bool)Program.ConvertAndRunExpression(engine, "typeof(object) == typeof(object)"));
+        }
 
         [Theory]
         [InlineData("new [] {1, 2}", new [] { 1, 2 })]
@@ -97,6 +106,14 @@ namespace CSharpToPython.Tests {
         [Fact]
         public void ArrayIndexingWorks() {
             Assert.Equal(1, Program.ConvertAndRunExpression(engine, "new [] {1, 2}[0]"));
+        }
+
+        [Fact]
+        public void DictionaryWorks() {
+            Assert.Equal(1, Program.ConvertAndRunStatements(engine, 
+                "return new System.Collections.Generic.Dictionary<int, int> { { 1, 1 } }",
+                new[] { "System" })
+            );
         }
 
         [Theory]
